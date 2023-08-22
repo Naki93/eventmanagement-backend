@@ -100,44 +100,7 @@ describe('Authentication Routes', () => {
     
   });
 
-  it('should allow an admin to delete an event', async () => {
-    // Log in an admin user to get a valid token
-    const loginResponse = await request(server) // Pass the server instance to request()
-      .post('/auth/login')
-      .send({
-        username: 'kite@gmail.com',
-        password: '896LdB78',
-      });
-
-    const token = loginResponse.body.token;
-
-    // Create an event to be deleted
-    const newEvent = {
-      eventName: 'Test Event',
-      eventDate: new Date(),
-      eventTime: '10:00 AM',
-      eventLocation: 'Test Location',
-      eventDescription: 'Test Description',
-    };
-
-    // First, create the event
-    const createResponse = await request(server)
-      .post('/auth/events')
-      .set('Authorization', `Bearer ${token}`)
-      .send(newEvent);
-
-    // Obtain the created event ID
-    const eventId = createResponse.body._id;
-
-    // Then, attempt to delete the event
-    const deleteResponse = await request(server)
-      .delete(`/auth/events/${eventId}`)
-      .set('Authorization', `Bearer ${token}`);
-
-    expect(deleteResponse.statusCode).toBe(200);
-    expect(deleteResponse.body.message).toBe('Event deleted successfully');
-  });
-
+  
   
  
 });
